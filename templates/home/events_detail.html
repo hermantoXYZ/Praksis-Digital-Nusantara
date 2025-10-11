@@ -1,0 +1,125 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="breadcrumb">
+    <div class="breadcrumb-container">
+        <nav class="breadcrumb-nav">
+            <a href="{% url 'index' %}">Home</a>
+            <span>›</span>
+            <a href="{% url 'index' %}">Events</a>
+            <span>›</span>
+            <span class="current">{{ events.title }}</span>
+        </nav>
+    </div>
+</div>
+
+<div class="container">
+    <div class="main-article">
+        {% if events.gambar_events %}
+        <div class="article-header">
+            <img src="{{ events.gambar_events.url }}" alt="{{ events.title }}" class="article-image">
+        </div>
+        {% endif %}
+        
+        <div class="article-content">
+            <h1 class="article-title-view">{{ events.title }}</h1>
+            
+            <div class="article-meta">
+                <div class="meta-item">
+                    <i class="ri-calendar-line"></i>
+                    <span>{{ events.tanggal_pelaksanaan|date:"d F Y" }}</span>
+                </div>
+                <div class="meta-item">
+                    <i class="ri-time-line"></i>
+                    <span>{{ events.waktu_pelaksanaan|time:"H:i" }} WITA</span>
+                </div>
+                <div class="meta-item">
+                    <i class="ri-map-pin-line"></i>
+                    <span>{{ events.lokasi_pelaksanaan }}</span>
+                </div>
+            </div>
+            
+            <div class="article-body">
+                {{ events.content|safe }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="sidebar">
+        <div class="sidebar-widget">
+            <div class="widget-header">
+                <div class="widget-icon">
+                    <i class="ri-calendar-event-line"></i>
+                </div>
+                <h3 class="widget-title">Event Details</h3>
+            </div>
+            <div class="event-details">
+                <div class="detail-item">
+                    <strong>Date:</strong> {{ events.tanggal_pelaksanaan|date:"d F Y" }}
+                </div>
+                <div class="detail-item">
+                    <strong>Time:</strong> {{ events.waktu_pelaksanaan|time:"H:i" }} WITA
+                </div>
+                <div class="detail-item">
+                    <strong>Location:</strong> {{ events.lokasi_pelaksanaan }}
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar-widget">
+            <div class="widget-header">
+                <div class="widget-icon">
+                    <i class="ri-article-line"></i>
+                </div>
+                <h3 class="widget-title">Latest Articles</h3>
+            </div>
+            <div class="latest-posts">
+                {% if latest_articles %}
+                {% for ini_variabel_sementara_artikel in latest_articles %}
+                <article class="latest-post">
+                    <img src="{{ ini_variabel_sementara_artikel.featured_image.url }}" alt="{{ ini_variabel_sementara_artikel.title }}" class="latest-post-image">
+                    <div class="latest-post-content">
+                        <h4 class="latest-post-title">
+                            <a href="{% url 'article_detail' ini_variabel_sementara_artikel.slug %}">{{ ini_variabel_sementara_artikel.title|truncatechars:50 }}</a>
+                        </h4>
+                        <div class="latest-post-date">
+                            <i class="far fa-calendar"></i>
+                            <span>{{ ini_variabel_sementara_artikel.updated_at|date:'d F Y' }}</span>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+.event-details {
+    padding: 15px 0;
+}
+
+.detail-item {
+    margin-bottom: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.detail-item strong {
+    color: #374151;
+    display: inline-block;
+    min-width: 80px;
+}
+.article-header img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+</style>
+{% endblock %} 

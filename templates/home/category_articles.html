@@ -1,0 +1,56 @@
+{% extends 'home/base.html' %}
+{% block title %}{{ category.name }}{% endblock %}
+{% block description %}{{ category.description }}{% endblock %}
+{% block meta %}
+    <meta name="description" content="{{ category.description }}">
+    <meta name="keywords" content="{{ category.keywords }}">
+    <meta name="author" content="{{ category.author }}">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="google" content="notranslate">
+{% endblock %}
+{% block content %}
+<section class="articles-section" style="margin-top: 20px; margin-bottom: 50px;">
+    <div class="agenda-header" style="margin-left: 20px;">
+        <h2 class="agenda-title" style="text-align: center;">{{ category.name }}</h2>
+    </div>
+    <div class="article-grid">
+        {% if articles %}
+        {% for article in articles %}
+        <article class="article-card">
+            <div class="article-image">
+                {% if article.featured_image %}
+                <img src="{{ article.featured_image.url }}" alt="{{ article.title }}" class="article-image-img">
+                {% else %}
+                <div class="article-image-placeholder"></div>
+                {% endif %}
+            </div>
+            <div class="article-content">
+                <div class="article-meta">
+                    <span class="category">{{ article.category }}</span>
+                    <span class="date">📅 {{ article.created_at|date:'d F Y' }}</span>
+                </div>
+                <h2 class="article-title">
+                    <a href="{% url 'article_detail' article.slug %}">{{ article.title|capfirst|truncatechars:50 }}</a>
+                </h2>
+                <p class="article-excerpt">
+                    {{ article.excerpt }}
+                </p>
+                <div class="article-footer">
+                    <div class="author">
+                        <div class="author-avatar">AS</div>
+                        <span>{{ article.author }}</span>
+                    </div>
+                    <a href="{% url 'article_detail' article.slug %}">
+                        <button class="read-more">Baca Selengkapnya</button>
+                    </a>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+        {% else %}
+        <p>Tidak ada artikel</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

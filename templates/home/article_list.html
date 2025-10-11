@@ -1,0 +1,504 @@
+{% extends 'home/base.html' %}
+{% block title %}Artikel - {{ web_title }}{% endblock %}
+{% block description %}Artikel -{{ web_name }}{% endblock %}
+{% block meta %}
+    <meta name="description" content="{{ web_name }}">
+    <meta name="keywords" content="{{ web_keywords }}">
+    <meta name="author" content="{{ web_author }}">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="google" content="notranslate">
+    <meta name="google-site-verification" content="{{ web_google_site_verification }}">
+    <meta name="google-site-verification" content="{{ web_google_site_verification }}">
+    <!-- Icons -->
+    <link rel="icon" href="{{ web_favicon }}">
+    <link rel="apple-touch-icon" href="{{ web_apple_touch_icon }}">
+    <link rel="manifest" href="{{ web_manifest }}">
+    <meta name="theme-color" content="{{ web_theme_color }}">
+    <meta name="msapplication-TileColor" content="{{ web_msapplication_tile_color }}">
+    <meta name="msapplication-TileImage" content="{{ web_msapplication_tile_image }}">
+    <meta name="msapplication-config" content="{{ web_msapplication_config }}">
+{% endblock %}
+{% block content %}
+<style>
+    /* Search and Filter Styles */
+    .search-filter-container {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        margin: 20px 0;
+    }
+    
+    .search-filter-form {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    
+    .search-box {
+        display: flex;
+        align-items: center;
+        background: #f8fafc;
+        border-radius: 25px;
+        padding: 8px 15px;
+        border: 1px solid #e2e8f0;
+        flex: 1;
+        min-width: 250px;
+    }
+    
+    .search-input {
+        border: none;
+        background: transparent;
+        outline: none;
+        padding: 8px;
+        font-size: 14px;
+        flex: 1;
+    }
+    
+    .search-button {
+        background: #3b82f6;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .search-button:hover {
+        background: #2563eb;
+        transform: scale(1.05);
+    }
+    
+    .filter-box {
+        min-width: 200px;
+    }
+    
+    .category-select {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        background: white;
+        font-size: 14px;
+        outline: none;
+        transition: border-color 0.3s ease;
+    }
+    
+    .category-select:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    .clear-filters {
+        display: flex;
+        align-items: center;
+    }
+    
+    .clear-filters-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 15px;
+        background: #ef4444;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+    
+    .clear-filters-btn:hover {
+        background: #dc2626;
+        transform: translateY(-1px);
+    }
+    
+    /* Responsive Design for Search/Filter */
+    @media (max-width: 768px) {
+        .search-filter-form {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .search-box {
+            min-width: auto;
+        }
+        
+        .filter-box {
+            min-width: auto;
+        }
+    }
+    
+    /* Search Results Info */
+    .search-results-info {
+        background: #f0f9ff;
+        border: 1px solid #bae6fd;
+        border-radius: 8px;
+        padding: 15px 20px;
+        margin: 20px 0;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    
+    .search-results-info p {
+        margin: 0;
+        color: #0369a1;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    
+    /* Pagination Styles */
+    .pagination-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 30px 0;
+        padding: 20px 0;
+        gap: 15px;
+    }
+    
+    .pagination-info {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    
+    .pagination-text {
+        color: #6b7280;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    
+    .pagination-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    
+    .per-page-text {
+        color: #6b7280;
+        font-size: 13px;
+    }
+    
+    .per-page-select {
+        padding: 5px 10px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 13px;
+        background: white;
+        outline: none;
+    }
+    
+    .per-page-select:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+    
+    .go-to-page {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 15px;
+    }
+    
+    .go-to-text {
+        color: #6b7280;
+        font-size: 13px;
+    }
+    
+    .go-to-input {
+        width: 60px;
+        padding: 5px 8px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 13px;
+        text-align: center;
+        outline: none;
+    }
+    
+    .go-to-input:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+    
+    .go-to-button {
+        padding: 5px 12px;
+        background: #3b82f6;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .go-to-button:hover {
+        background: #2563eb;
+        transform: translateY(-1px);
+    }
+    
+    .pagination {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: white;
+        padding: 15px 25px;
+        border-radius: 50px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        border: 1px solid #e2e8f0;
+    }
+    
+    .page-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        height: 40px;
+        padding: 0 12px;
+        border-radius: 20px;
+        text-decoration: none;
+        color: #3b82f6;
+        font-weight: 500;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+    }
+    
+    .page-link:hover {
+        background: #3b82f6;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+    
+    .page-link.active {
+        background: #3b82f6;
+        color: white;
+        font-weight: 600;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+    
+    .page-link.active:hover {
+        transform: none;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .pagination {
+            padding: 12px 20px;
+            gap: 6px;
+        }
+        
+        .page-link {
+            min-width: 35px;
+            height: 35px;
+            padding: 0 8px;
+            font-size: 13px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .pagination {
+            padding: 10px 15px;
+            gap: 4px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .page-link {
+            min-width: 32px;
+            height: 32px;
+            padding: 0 6px;
+            font-size: 12px;
+        }
+    }
+    </style>
+<section class="articles-section">
+<nav class="breadcrumb">
+    <div class="breadcrumb-container">
+        <div class="breadcrumb-nav">
+            <a href="{% url 'index' %}">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="{% url 'article_list' %}">Artikel</a>
+            <i class="fas fa-chevron-right"></i>
+            <span class="current">Semua Artikel</span>
+        </div>
+    </div>
+</nav>
+<!-- Search and Filter Section -->
+<div class="search-filter-container">
+    <form method="GET" action="{% url 'article_list' %}" class="search-filter-form">
+        {% if request.GET.per_page %}
+        <input type="hidden" name="per_page" value="{{ request.GET.per_page }}">
+        {% endif %}
+        <div class="search-box">
+            <input type="text" name="search" placeholder="Cari artikel..." value="{{ search_query|default:'' }}" class="search-input">
+            <button type="submit" class="search-button">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        
+        <div class="filter-box">
+            <select name="category" class="category-select" onchange="this.form.submit()">
+                <option value="">Semua Kategori</option>
+                {% for category in categories %}
+                <option value="{{ category.slug }}" {% if current_category == category.slug %}selected{% endif %}>
+                    {{ category.name }} ({{ category.article_count }})
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        {% if search_query or current_category %}
+        <div class="clear-filters">
+            <a href="{% url 'article_list' %}{% if request.GET.per_page %}?per_page={{ request.GET.per_page }}{% endif %}" class="clear-filters-btn">
+                <i class="fas fa-times"></i> Hapus Filter
+            </a>
+        </div>
+        {% endif %}
+    </form>
+</div>
+
+<!-- Search Results Info -->
+{% if search_query or current_category %}
+<div class="search-results-info">
+    {% if search_query and current_category %}
+        <p>Menampilkan hasil pencarian "{{ search_query }}" dalam kategori "{{ current_category }}" ({{ articles.paginator.count }} artikel ditemukan)</p>
+    {% elif search_query %}
+        <p>Menampilkan hasil pencarian "{{ search_query }}" ({{ articles.paginator.count }} artikel ditemukan)</p>
+    {% elif current_category %}
+        <p>Menampilkan artikel dalam kategori "{{ current_category }}" ({{ articles.paginator.count }} artikel)</p>
+    {% endif %}
+</div>
+{% endif %}
+
+    <div class="article-grid" style="margin-top: 20px; margin-bottom: 20px;">
+        {% if articles %}
+        {% for ini_variabel_sementara_artikel in articles %}
+        <article class="article-card">
+            <div class="article-image">
+                {% if ini_variabel_sementara_artikel.featured_image %}
+                <img src="{{ ini_variabel_sementara_artikel.featured_image.url }}" alt="{{ ini_variabel_sementara_artikel.title }}" class="article-image-img">
+                {% else %}
+                <div class="article-image-placeholder"></div>
+                {% endif %}
+            </div>
+            <div class="article-content">
+                <div class="article-meta">
+                    <span class="category">{{ ini_variabel_sementara_artikel.category|truncatechars:9 }}</span>
+                    <span class="date">📅 {{ ini_variabel_sementara_artikel.created_at|date:'d F Y' }}</span>
+                </div>
+                <h2 class="article-title">
+                    <a href="{% url 'article_detail' ini_variabel_sementara_artikel.slug %}">{{ ini_variabel_sementara_artikel.title|capfirst|truncatechars:50 }}</a>
+                </h2>
+                <p class="article-excerpt">
+                    {{ ini_variabel_sementara_artikel.excerpt }}
+                </p>
+                <div class="article-footer">
+                    <div class="author">
+                        <div class="author-avatar">AS</div>
+                        <span>{{ ini_variabel_sementara_artikel.author }}</span>
+                    </div>
+                    <a href="{% url 'article_detail' ini_variabel_sementara_artikel.slug %}">
+                        <button class="read-more">Baca Selengkapnya</button>
+                    </a>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+        {% else %}
+        {% endif %}
+       
+    </div>
+    
+    <!-- Pagination -->
+    {% if paginator and articles.has_other_pages %}
+    <div class="pagination-container">
+        <div class="pagination-info">
+            <span class="pagination-text">
+                {% if paginator %}
+                    Halaman {{ articles.number }} dari {{ articles.paginator.num_pages }}
+                    ({{ articles.paginator.count }} artikel)
+                {% else %}
+                    Menampilkan semua artikel ({{ articles.count }} artikel)
+                {% endif %}
+            </span>
+            {% if paginator %}
+            <div class="pagination-controls">
+                <span class="per-page-text">Tampilkan:</span>
+                <select class="per-page-select" onchange="changePerPage(this.value)">
+                    <option value="6" {% if request.GET.per_page == '6' %}selected{% endif %}>6 per halaman</option>
+                    <option value="12" {% if request.GET.per_page == '12' or not request.GET.per_page %}selected{% endif %}>12 per halaman</option>
+                    <option value="24" {% if request.GET.per_page == '24' %}selected{% endif %}>24 per halaman</option>
+                    <option value="48" {% if request.GET.per_page == '48' %}selected{% endif %}>48 per halaman</option>
+                    <option value="all" {% if request.GET.per_page == 'all' %}selected{% endif %}>Semua artikel</option>
+                </select>
+            </div>
+            {% endif %}
+        </div>
+        <div class="pagination">
+            {% if articles.has_previous %}
+                <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if request.GET.per_page %}&per_page={{ request.GET.per_page }}{% endif %}" class="page-link" title="Halaman Pertama">&laquo; First</a>
+                <a href="?page={{ articles.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if request.GET.per_page %}&per_page={{ request.GET.per_page }}{% endif %}" class="page-link" title="Halaman Sebelumnya">&lsaquo; Previous</a>
+            {% endif %}
+            
+            {% for num in articles.paginator.page_range %}
+                {% if articles.number == num %}
+                    <span class="page-link active">{{ num }}</span>
+                {% elif num > articles.number|add:'-3' and num < articles.number|add:'3' %}
+                    <a href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if request.GET.per_page %}&per_page={{ request.GET.per_page }}{% endif %}" class="page-link">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+            
+            {% if articles.has_next %}
+                <a href="?page={{ articles.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if request.GET.per_page %}&per_page={{ request.GET.per_page }}{% endif %}" class="page-link" title="Halaman Selanjutnya">Next &rsaquo;</a>
+                <a href="?page={{ articles.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}{% if request.GET.per_page %}&per_page={{ request.GET.per_page }}{% endif %}" class="page-link" title="Halaman Terakhir">Last &raquo;</a>
+            {% endif %}
+        </div>
+        
+        <!-- Go to page input -->
+        <div class="go-to-page">
+            <span class="go-to-text">Ke halaman:</span>
+            <input type="number" id="goToPage" min="1" max="{{ articles.paginator.num_pages }}" class="go-to-input" placeholder="{{ articles.number }}">
+            <button type="button" onclick="goToPage()" class="go-to-button">Go</button>
+        </div>
+    </div>
+    {% endif %}
+</section>
+<script>
+function changePerPage(value) {
+    const url = new URL(window.location);
+    url.searchParams.set('per_page', value);
+    url.searchParams.delete('page'); // Reset to first page when changing per_page
+    window.location.href = url.toString();
+}
+
+function goToPage() {
+    const pageInput = document.getElementById('goToPage');
+    const page = parseInt(pageInput.value);
+    const maxPage = parseInt(pageInput.max);
+    
+    if (page && page >= 1 && page <= maxPage) {
+        const url = new URL(window.location);
+        url.searchParams.set('page', page);
+        window.location.href = url.toString();
+    } else {
+        alert('Masukkan nomor halaman yang valid (1-' + maxPage + ')');
+        pageInput.focus();
+    }
+}
+
+// Allow Enter key to submit go to page
+document.getElementById('goToPage').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        goToPage();
+    }
+});
+</script>
+{% endblock %}

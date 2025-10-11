@@ -1,0 +1,421 @@
+{% extends 'home/base.html' %}
+{% block title %}{{ web_title }}{% endblock %}
+{% block description %}{{ web_name }}{% endblock %}
+{% block meta %}
+    <meta name="description" content="{{ web_name }}">
+    <meta name="keywords" content="{{ web_keywords }}">
+    <meta name="author" content="{{ web_author }}">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="google" content="notranslate">
+    <meta name="google-site-verification" content="{{ web_google_site_verification }}">
+    <meta name="google-site-verification" content="{{ web_google_site_verification }}">
+    <!-- Icons -->
+    <link rel="icon" href="{{ web_favicon }}">
+    <link rel="apple-touch-icon" href="{{ web_apple_touch_icon }}">
+    <link rel="manifest" href="{{ web_manifest }}">
+    <meta name="theme-color" content="{{ web_theme_color }}">
+    <meta name="msapplication-TileColor" content="{{ web_msapplication_tile_color }}">
+    <meta name="msapplication-TileImage" content="{{ web_msapplication_tile_image }}">
+    <meta name="msapplication-config" content="{{ web_msapplication_config }}">
+{% endblock %}
+{% block content %}
+    <section class="hero-section">
+        <div class="slider-container" id="sliderContainer">
+            <!-- Slide 1 -->
+            <div class="slide" style="background-image: url('https://www.feb.unm.ac.id/media/assets/gifheader.gif');">
+                <div class="slide-content">
+                    <span class="slide-subtitle">IDPMI!</span>
+                    <h2>From Ideas to Impact</h2>
+                    <p>Kolaborasi Nyata untuk Pasar Modal Indonesia..</p>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="slide" style="background-image: url('https://www.feb.unm.ac.id/media/assets/gifheader.gif');">
+                <div class="slide-content">
+                    <span class="slide-subtitle">INOVASI!</span>
+                    <h2>From Ideas to Impact</h2>
+                    <p>Meningkatkan kualitas SDM di pasar modal melalui Tri Dharma Perguruan Tinggi..</p>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="slide" style="background-image: url('https://www.feb.unm.ac.id/media/assets/gifheader.gif');">
+                <div class="slide-content">
+                    <span class="slide-subtitle">KOLABORASI!</span>
+                    <h2>Jalinan Kemitraan</h2>
+                    <p>Bersama membangun masa depan melalui kolaborasi lintas sektor yang kuat.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons Container -->
+        <div class="slider-arrows-container">
+            <button class="slider-nav-button prev-button" onclick="prevSlide()">&#10094;</button>
+            <button class="slider-nav-button next-button" onclick="nextSlide()">&#10095;</button>
+        </div>
+
+        <!-- Navigation Dots (tetap dipertahankan) -->
+        <div class="slider-dots" id="sliderDots">
+            <span class="dot active" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+    </section>  
+
+
+    <section class="articles-section">
+        <div class="agenda-container">
+        <div class="agenda-header">
+            <h2 class="agenda-title">News & Event</h2>
+        </div>
+    <div class="article-grid">
+        {% if article_list %}
+        {% for ini_variabel_sementara_artikel in article_list %}
+        <article class="article-card">
+            <div class="article-image">
+                {% if ini_variabel_sementara_artikel.featured_image %}
+                <img src="{{ ini_variabel_sementara_artikel.featured_image.url }}" alt="{{ ini_variabel_sementara_artikel.title }}" class="article-image-img">
+                {% else %}
+                <div class="article-image-placeholder"></div>
+                {% endif %}
+            </div>
+            <div class="article-content">
+                <div class="article-meta">
+                    <span class="category"><a style="color: #ffffff;" href="{% url 'category_articles' ini_variabel_sementara_artikel.category.slug %}">{{ ini_variabel_sementara_artikel.category|truncatechars:9 }}</a></span>
+                    <span class="date">📅 {{ ini_variabel_sementara_artikel.created_at|date:'d F Y' }}</span>
+                </div>
+                <h2 class="article-title">
+                    <a href="{% url 'article_detail' ini_variabel_sementara_artikel.slug %}">{{ ini_variabel_sementara_artikel.title|capfirst|truncatechars:50 }}</a>
+                </h2>
+                <p class="article-excerpt">
+                    {{ ini_variabel_sementara_artikel.excerpt }}
+                </p>
+                <div class="article-footer">
+                    <div class="author">
+                        <div class="author-avatar">AS</div>
+                        <span>{{ ini_variabel_sementara_artikel.author }}</span>
+                    </div>
+                    <a href="{% url 'article_detail' ini_variabel_sementara_artikel.slug %}">
+                        <button class="read-more">Baca Selengkapnya</button>
+                    </a>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+        {% else %}
+        <p>Tidak ada artikel</p>
+        {% endif %}
+       
+    </div>
+    
+    <!-- Pagination -->
+    {% if article_list.has_other_pages %}
+    <div class="pagination-container">
+        <div class="pagination">
+            {% if article_list.has_previous %}
+                <a href="?page=1" class="page-link" title="Halaman Pertama">&laquo; First</a>
+                <a href="?page={{ article_list.previous_page_number }}" class="page-link" title="Halaman Sebelumnya">&lsaquo; Previous</a>
+            {% endif %}
+            
+            {% for num in article_list.paginator.page_range %}
+                {% if article_list.number == num %}
+                    <span class="page-link active">{{ num }}</span>
+                {% elif num > article_list.number|add:'-3' and num < article_list.number|add:'3' %}
+                    <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+            
+            {% if article_list.has_next %}
+                <a href="?page={{ article_list.next_page_number }}" class="page-link" title="Halaman Selanjutnya">Next &rsaquo;</a>
+                <a href="?page={{ article_list.paginator.num_pages }}" class="page-link" title="Halaman Terakhir">Last &raquo;</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+    </div>
+</section>
+
+
+<section class="agenda-section" style="margin-top: -50px;">
+    <div class="agenda-container">
+        <div class="agenda-header">
+            <h2 class="agenda-title">Agenda Umum</h2>
+        </div>
+        <div class="agenda-slider">
+            <div class="agenda-cards" id="umumSlider">
+                {% for event in all_events %}
+                <div class="agenda-card">
+                    <div class="agenda-card-inner">
+                        <div class="agenda-date-block">
+                            <div class="agenda-day">{{ event.tanggal_pelaksanaan|date:'d' }}</div>
+                            <div class="agenda-month">{{ event.tanggal_pelaksanaan|date:'M' }}</div>
+                            <div class="agenda-time">{{ event.waktu_pelaksanaan|date:'H:i' }} WITA</div>
+                        </div>
+                        <div class="agenda-content">
+                            <div class="agenda-event-title"><a href="{% url 'events_detail' event.id %}">{{ event.title }}</a></div>
+                            <div class="agenda-location">{{ event.lokasi_pelaksanaan }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="slider-nav">
+                <button class="nav-btn prev" id="umumPrevBtn">‹</button>
+                <button class="nav-btn next" id="umumNextBtn">›</button>
+            </div>
+            <div class="slider-dots" id="umumSliderDots"></div>
+        </div>
+    </div>
+</section>
+
+<section class="partners-section" style="margin-top: -100px;">
+    <div class="partners-container">
+        <div class="partners-header">
+            <h2 class="partners-title">Network and Collaboration</h2>
+        </div>
+        <div class="partners-slider">
+            <div class="partners-cards" id="partnersSlider">
+                <!-- Item Partner 1 (ITB JDIH) -->
+                <div class="partner-card">
+                    <div class="partner-card-inner">
+                        <div class="partner-logo-container">
+                            <img src="/media/patners/CFP-Logo.png" alt="Logo Kemdikti" class="partner-logo">
+                        </div>
+                        <div class="partner-content">
+                            <div class="partner-name">Certified Financial Planner</div>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Item Partner 4 (UNM) -->
+                 <div class="partner-card">
+                    <div class="partner-card-inner">
+                        <div class="partner-logo-container">
+                            <img src="/media/patners/mui.png" alt="Dewan Syariah Nasional" class="partner-logo">
+                        </div>
+                        <div class="partner-content">
+                            <div class="partner-name">Dewan Syariah Nasional</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-card-inner">
+                        <div class="partner-logo-container">
+                            <img src="/media/patners/GRI.png" alt="Logo The Global Reporting Initiative (GRI)" class="partner-logo">
+                        </div>
+                        <div class="partner-content">
+                            <div class="partner-name">The Global Reporting Initiative (GRI)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-card-inner">
+                        <div class="partner-logo-container">
+                            <img src="/media/patners/GBP.png" alt="PT. Global Bayu Prima " class="partner-logo">
+                        </div>
+                        <div class="partner-content">
+                            <div class="partner-name">PT. Global Bayu Prima </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-card-inner">
+                        <div class="partner-logo-container">
+                            <img src="/media/patners/bni.jpg" alt="Logo BNI" class="partner-logo">
+                        </div>
+                        <div class="partner-content">
+                            <div class="partner-name">Bank BNI</div>
+                        </div>
+                    </div>
+                </div>
+
+                  <div class="partner-card">
+                    <div class="partner-card-inner">
+                        <div class="partner-logo-container">
+                            <img src="/media/patners/CI.png" alt="Logo Coaching Indonesia" class="partner-logo">
+                        </div>
+                        <div class="partner-content">
+                            <div class="partner-name">Coaching Indonesia</div>
+                        </div>
+                    </div>
+                </div>
+
+                  <div class="partner-card">
+                    <div class="partner-card-inner">
+                        <div class="partner-logo-container">
+                            <img src="/media/patners/investindo.png" alt="Logo Investindo Nusantara Sekuritas" class="partner-logo">
+                        </div>
+                        <div class="partner-content">
+                            <div class="partner-name">Investindo Nusantara Sekuritas</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="partner-card">
+                    <div class="partner-card-inner">
+                        <div class="partner-logo-container">
+                            <img src="/media/patners/Suluh-Media-Logo.png" alt="Logo Suluh Media" class="partner-logo">
+                        </div>
+                        <div class="partner-content">
+                            <div class="partner-name">Suluh Media</div>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="partner-card">
+                    <div class="partner-card-inner">
+                        <div class="partner-logo-container">
+                            <img src="/media/patners/lsp.png" alt="Logo LSP IKEPAMI" class="partner-logo">
+                        </div>
+                        <div class="partner-content">
+                            <div class="partner-name">LSP IKEPAMI</div>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="partner-card">
+                    <div class="partner-card-inner">
+                        <div class="partner-logo-container">
+                            <img src="/media/patners/wwf.jpg" alt="Logo wwf Indonesia" class="partner-logo">
+                        </div>
+                        <div class="partner-content">
+                            <div class="partner-name">WWF Indonesia</div>
+                        </div>
+                    </div>
+                </div>
+
+                   <div class="partner-card">
+                    <div class="partner-card-inner">
+                        <div class="partner-logo-container">
+                            <img src="/media/patners/korea.jpg" alt="Logo Korean Investment & Sekuritas Indonesia" class="partner-logo">
+                        </div>
+                        <div class="partner-content">
+                            <div class="partner-name">Korean Investment & Sekuritas Indonesia</div>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="partner-card">
+                    <div class="partner-card-inner">
+                        <div class="partner-logo-container">
+                            <img src="/media/patners/grasindo.png" alt="Logo Grasindo" class="partner-logo">
+                        </div>
+                        <div class="partner-content">
+                            <div class="partner-name">Grasindo</div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="slider-nav">
+                <button class="nav-btn prev" id="partnersPrevBtn">‹</button>
+                <button class="nav-btn next" id="partnersNextBtn">›</button>
+            </div>
+            <div class="slider-dots" id="partnersSliderDots" style="display: none;"></div>
+        </div>
+    </div>
+</section>  
+
+
+
+<style>
+/* Pagination Styles */
+.pagination-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px 0;
+    padding: 20px 0;
+    gap: 15px;
+}
+
+.pagination-info {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.pagination-text {
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    padding: 15px 25px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border: 1px solid #e2e8f0;
+}
+
+.page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #3b82f6;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.page-link:hover {
+    background: #3b82f6;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.page-link.active {
+    background: #3b82f6;
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.page-link.active:hover {
+    transform: none;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .pagination {
+        padding: 12px 20px;
+        gap: 6px;
+    }
+    
+    .page-link {
+        min-width: 35px;
+        height: 35px;
+        padding: 0 8px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pagination {
+        padding: 10px 15px;
+        gap: 4px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .page-link {
+        min-width: 32px;
+        height: 32px;
+        padding: 0 6px;
+        font-size: 12px;
+    }
+}
+</style>
+{% endblock %}

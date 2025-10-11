@@ -1,0 +1,145 @@
+{% load static %}
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{% block title %}IDPMI{% endblock %}</title>
+    <meta name="description" content="{% block description %}{% endblock %}">
+	{% block meta %}{% endblock %}
+    <!-- Fonts & Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/media/logo/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/media/logo/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/media/logo/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'home.css' %}?v={{ STATIC_VERSION }}">
+</head>
+<body>
+
+	<!-- NAVBAR -->
+    <div class="top-bar">
+        <div class="top-bar-container">
+            <div class="top-bar-left">
+                <div class="top-bar-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                {{ address }}
+                </div>
+                <div class="top-bar-item">
+                    <i class="fas fa-envelope"></i> {{ email }}
+                </div>
+            </div>
+            <div class="top-bar-right">
+                <div class="top-bar-social">
+                    <a href="https://www.facebook.com/idpmindonesia" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/idpmindonesia/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'app:dashboard' %}"><i class="fas fa-user"></i></a>
+                    {% else %}
+                        <a href="{% url 'login' %}"><i class="fas fa-user"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header class="main-header">
+        <div class="main-header-container">
+            <div class="logo">
+                <a href="{% url 'index' %}">
+                    <img src="/media/logo/logos.png" alt="FEBRUNM Logo">
+                </a>
+            </div>
+            <button class="hamburger-menu" aria-label="Toggle navigation menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li class="has-dropdown">
+                        <a href="#">Profil <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="/page/about-us">About Us</a></li>
+                            <li><a href="/page/visi-misi">Visi & Misi</a></li>
+                            <li><a href="/page/struktur-organisasi">Struktur Organisasi</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'page_detail' 'produk-hukum' %}">Produk Hukum</a></li>
+                    <li class="has-dropdown">
+                        <a href="#">Program Kerja<i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="{% url 'page_detail' 'kegiatan-ilmiah' %}">2025-2029</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'page_detail' 'e-library' %}">e-Library</a></li>
+                    <li><a href="{% url 'page_detail' 'kerja-sama' %}">Networking & Collaboration</a></li>
+                </ul>
+                <button class="search-button" onclick="window.location.href='{% url 'article_list' %}'" aria-label="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+            </nav>
+        </div>
+    </header>  
+{% block content %}{% endblock %}
+<footer class="footer" id="contact">
+    <div class="footer-content">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="footer-logo">
+                  <img src="/media/logo/logos.png" style="width: 180px;" alt="FEBRUNM Logo">
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="ri-facebook-fill"></i></a>
+                    <a href="#"><i class="ri-twitter-fill"></i></a>
+                    <a href="#"><i class="ri-instagram-fill"></i></a>
+                    <a href="#"><i class="ri-linkedin-fill"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="{% url 'page_detail' 'about-us' %}">About Us</a></li>
+                    <li><a href="{% url 'page_detail' 'visi-misi' %}">Visi & Misi</a></li>
+                    <li><a href="{% url 'page_detail' 'contact' %}">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="{% url 'page_detail' 'panduan-skripsi' %}">Daftar Anggota</a></li>
+                    <li><a href="{% url 'page_detail' 'template-dokumen' %}">Template Dokumen</a></li>
+                    <li><a href="{% url 'page_detail' 'faq' %}">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Info</h4>
+                <div class="contact-info">
+                    <p><i class="ri-map-pin-2-line"></i> Jalan Raya Pendidikan Makassar, Kode Pos - 90222</p>
+                    <p><i class="ri-phone-line"></i>{{ telp }}</p>
+                    <p><i class="ri-mail-line"></i>{{ email }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="copyright">
+                <p>© 2024 {{ created_by }}. All rights reserved.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Policy</a>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="/static/js/web_js.js?v={{ STATIC_VERSION }}"></script>
+<script src="/static/js/swiper.js?v={{ STATIC_VERSION }}"></script>
+</body>
+</html>

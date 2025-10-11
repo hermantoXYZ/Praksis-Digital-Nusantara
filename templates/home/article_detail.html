@@ -1,0 +1,212 @@
+{% extends 'home/base.html' %}
+{% block title %}{{ article.title }} - {{ web_title }}{% endblock %}
+{% block description %}{{ article.excerpt }}{% endblock %}
+{% block meta %}
+    <meta name="description" content="{{ article.excerpt }}">
+    <meta name="keywords" content="{{ article.keywords }}">
+    <meta name="author" content="{{ article.author }}">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="google" content="notranslate">
+{% endblock %}
+{% block content %}
+<!-- <h1>{{ article.title }}</h1>
+<img src="{{ article.featured_image.url }}" alt="{{ article.title }}">
+<div>{{ article.content|safe }}</div> -->
+ <!-- Breadcrumb Navigation -->
+ <nav class="breadcrumb">
+    <div class="breadcrumb-container">
+        <div class="breadcrumb-nav">
+            <a href="#">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="{% url 'category_articles' article.category.slug %}">{{ article.category }}</a>
+            <i class="fas fa-chevron-right"></i>
+            <span class="current">{{ article.title|truncatechars:20 }}</span>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <!-- Main Article -->
+    <article class="main-article">
+        <div class="article-header">
+            <img src="{{ article.featured_image.url }}" alt="{{ article.title }}" class="article-image">
+            <a href="{% url 'category_articles' article.category.slug %}" class="category-badge">{{ article.category }}</a>
+        </div>
+
+        <div class="article-content">
+            <h1 class="article-title-view">{{ article.title }}</h1>
+            
+            <div class="article-meta">
+                <div class="meta-item">
+                    <i class="far fa-calendar"></i>
+                    <span>{{ article.created_at|date:'d F Y' }}</span>
+                </div>
+                <div class="meta-item">
+                    <i class="far fa-user"></i>
+                    <span>{{ article.author }}</span>
+                </div>
+                <div class="meta-item">
+                    <i class="far fa-clock"></i>
+                    <span>{{ article.content|wordcount }} Characters</span>
+                </div>
+                <div class="meta-item">
+                    <i class="far fa-eye"></i>
+                    <span>{{ article.views_count }} views</span>
+                </div>
+            </div>
+
+            <div class="article-body">
+                {{ article.content|safe }}
+            </div>
+            <!-- update at -->
+            <div class="article-meta">
+                <div class="meta-item">
+                    <i class="far fa-clock"></i>
+                    <span>Updated at: {{ article.updated_at|date:'d F Y' }}</span>
+                </div>
+            </div>
+
+            <!-- Share Section -->
+            <div class="share-section">
+                <h3 class="share-title">Share</h3>
+                <div class="share-buttons">
+                    <a href="#" class="share-btn share-facebook" onclick="shareToFacebook()">
+                        <i class="fab fa-facebook-f"></i>
+                        Facebook
+                    </a>
+                    <a href="#" class="share-btn share-twitter" onclick="shareToTwitter()">
+                        <i class="fab fa-twitter"></i>
+                        Twitter
+                    </a>
+                    <a href="#" class="share-btn share-whatsapp" onclick="shareToWhatsApp()">
+                        <i class="fab fa-whatsapp"></i>
+                        WhatsApp
+                    </a>
+                    <a href="#" class="share-btn share-linkedin" onclick="shareToLinkedIn()">
+                        <i class="fab fa-linkedin-in"></i>
+                        LinkedIn
+                    </a>
+                    <a href="#" class="share-btn" onclick="copyLink()">
+                        <i class="fas fa-link"></i>
+                        Copy Link
+                    </a>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <!-- Latest Articles -->
+        <div class="sidebar-widget">
+            <div class="widget-header">
+                <div class="widget-icon">
+                    <i class="fas fa-link"></i>
+                </div>
+                <h3 class="widget-title">Link Cepat</h3>
+            </div>
+            <div class="category-list">
+                <a href="{% url 'index' %}" class="category-item">
+                    <span>Beranda</span>
+                    <i class="fas fa-home"></i>
+                </a>
+                <a href="{% url 'article_list' %}" class="category-item">
+                    <span>Artikel</span>
+                    <i class="fas fa-flask"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="sidebar-widget">
+            <div class="widget-header">
+                <div class="widget-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3 class="widget-title">Artikel Terbaru</h3>
+            </div>
+            <div class="latest-posts">
+                {% if latest_articles %}
+                {% for ini_variabel_sementara_artikel in latest_articles %}
+                <article class="latest-post">
+                    <img src="{{ ini_variabel_sementara_artikel.featured_image.url }}" alt="{{ ini_variabel_sementara_artikel.title }}" class="latest-post-image">
+                    <div class="latest-post-content">
+                        <h4 class="latest-post-title">
+                            <a href="{% url 'article_detail' ini_variabel_sementara_artikel.slug %}">{{ ini_variabel_sementara_artikel.title|truncatechars:50 }}</a>
+                        </h4>
+                        <div class="latest-post-date">
+                            <i class="far fa-calendar"></i>
+                            <span>{{ ini_variabel_sementara_artikel.updated_at|date:'d F Y' }}</span>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+                {% endif %}
+                
+            </div>
+        </div>
+
+        <div class="sidebar-widget">
+            <div class="widget-header">
+                <div class="widget-icon">
+                    <i class="fas fa-calendar"></i>
+                </div>
+                <h3 class="widget-title">Popular Articles</h3>
+            </div>
+            <div class="latest-posts">
+                {% if popular_articles %}
+                {% for ini_variabel_sementara_artikel in popular_articles %}
+                <article class="latest-post">
+                    <img src="{{ ini_variabel_sementara_artikel.featured_image.url }}" alt="{{ ini_variabel_sementara_artikel.title }}" class="latest-post-image">
+                    <div class="latest-post-content">
+                        <h4 class="latest-post-title">
+                            <a href="{% url 'article_detail' ini_variabel_sementara_artikel.slug %}">{{ ini_variabel_sementara_artikel.title|truncatechars:50 }}</a>
+                        </h4>
+                    </div>
+                </article>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="sidebar-widget">
+            <div class="widget-header">
+                <div class="widget-icon">
+                    <i class="fas fa-folder"></i>
+                </div>
+                <h3 class="widget-title">Kategori</h3>
+            </div>
+            <div class="category-list">
+
+                {% if category_list %}
+                {% for ini_variabel_sementara_kategori in category_list %}
+                <a href="{% url 'category_articles' ini_variabel_sementara_kategori.slug %}" class="category-item">
+                    <span>{{ ini_variabel_sementara_kategori.name }}</span>
+                    <span class="category-count">{{ ini_variabel_sementara_kategori.article_count }}</span>
+                </a>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Popular Tags -->
+        <!-- <div class="sidebar-widget">
+            <div class="widget-header">
+                <div class="widget-icon">
+                    <i class="fas fa-tags"></i>
+                </div>
+                <h3 class="widget-title">Tag Populer</h3>
+            </div>
+            <div class="tags-container">
+                <a href="#" class="tag-item">Agenda</a>
+            </div>
+        </div> -->
+    </aside>
+</div>
+
+<!-- Mobile Share FAB -->
+<div class="mobile-share-fab" onclick="toggleMobileShare()">
+    <i class="fas fa-share-alt"></i>
+</div>
+{% endblock %}
