@@ -16,6 +16,20 @@ Platform ini dirancang untuk:
 
 ---
 
+
+## 📊 Screenshot (opsional)
+
+> Tangkapan layar halaman dashboard, dan Home page.
+
+[![Dashboard](capture/127.0.0.1_8000_.png)](capture/127.0.0.1_8000_.png)  
+[![Direktori Pakar](capture/127.0.0.1_8000_article_.png)](capture/127.0.0.1_8000_article_.png)  
+[![Berita](capture/127.0.0.1_8000_article_hallo-sahabat-idpmi_.png)](capture/127.0.0.1_8000_article_hallo-sahabat-idpmi_.png)
+[![Dashboard](capture/127.0.0.1_8000_dashboard_.png)](capture/127.0.0.1_8000_dashboard_.png)  
+[![Login](capture/127.0.0.1_8000_login_.png)](capture/127.0.0.1_8000_login_.png)
+
+
+---
+
 ## 🧩 Fitur Utama
 
 ### 👤 **Manajemen Pengguna**
@@ -136,19 +150,6 @@ Akses di: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 | Role  | Username | Password |
 | ----- | -------- | -------- |
 | Admin | admin    | admin |
-
----
-
-## 📊 Screenshot (opsional)
-
-> Tangkapan layar halaman dashboard, dan Home page.
-
-[![Dashboard](capture/127.0.0.1_8000_.png)](capture/127.0.0.1_8000_.png)  
-[![Direktori Pakar](capture/127.0.0.1_8000_article_.png)](capture/127.0.0.1_8000_article_.png)  
-[![Berita](capture/127.0.0.1_8000_article_hallo-sahabat-idpmi_.png)](capture/127.0.0.1_8000_article_hallo-sahabat-idpmi_.png)
-[![Dashboard](capture/127.0.0.1_8000_dashboard_.png)](capture/127.0.0.1_8000_dashboard_.png)  
-[![Login](capture/127.0.0.1_8000_login_.png)](capture/127.0.0.1_8000_login_.png)
-
 
 ---
 
