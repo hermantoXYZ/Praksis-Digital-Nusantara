@@ -168,6 +168,13 @@ Akses di: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 > Tambahkan tangkapan layar halaman dashboard, direktori pakar, dan berita di sini jika sudah tersedia.
 
+[![Dashboard](capture/127.0.0.1_8000_.png)](capture/127.0.0.1_8000_.png)  
+[![Direktori Pakar](capture/127.0.0.1_8000_article_.png)](capture/127.0.0.1_8000_article_.png)  
+[![Berita](capture/127.0.0.1_8000_article_hallo-sahabat-idpmi_.png)](capture/127.0.0.1_8000_article_hallo-sahabat-idpmi_.png)
+[![Dashboard](capture/127.0.0.1_8000_dashboard_.png)](capture/127.0.0.1_8000_dashboard_.png)  
+[![Login](capture/127.0.0.1_8000_login_.png)](capture/127.0.0.1_8000_login_.png)
+
+
 ---
 
 ## 📄 Lisensi
@@ -196,9 +203,3 @@ Dapat digunakan dan dimodifikasi untuk tujuan pendidikan dan pengembangan komuni
 > *"Bersama membangun ekosistem pasar modal yang akademis, inklusif, dan berintegritas."*
 > **— IDPMI (Ikatan Dosen Pasar Modal Indonesia)**
 
-```
-
----
-
-Apakah kamu ingin saya buatkan **versi README yang lebih singkat dan ringkas** (misalnya untuk tampilan GitHub utama), atau tetap versi **panjang seperti di atas** untuk dokumentasi lengkap internal proyek Django-mu?
-```
