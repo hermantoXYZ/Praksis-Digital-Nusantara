@@ -1,7 +1,7 @@
 
 # 🌐 IDPMI - Ikatan Dosen Pasar Modal Indonesia
 
-Selamat datang di repository resmi website **IDPMI (Ikatan Dosen Pasar Modal Indonesia)**.  
+Selamat datang di repository website **IDPMI (Ikatan Dosen Pasar Modal Indonesia)**.  
 Website ini dikembangkan sebagai portal digital resmi bagi para dosen, peneliti, dan praktisi pasar modal di Indonesia untuk berkolaborasi, berbagi pengetahuan, serta mengelola kegiatan organisasi secara profesional dan terintegrasi.
 
 ---
@@ -10,9 +10,9 @@ Website ini dikembangkan sebagai portal digital resmi bagi para dosen, peneliti,
 
 Platform ini dirancang untuk:
 - Menjadi wadah komunikasi dan kolaborasi antar dosen pasar modal di Indonesia.  
-- Menyediakan informasi terkini seputar penelitian, pendidikan, dan kegiatan pengabdian masyarakat.  
-- Menjadi pusat data keanggotaan, kepakaran, dan publikasi anggota IDPMI.  
-- Mendukung tata kelola organisasi IDPMI yang lebih modern, transparan, dan efisien.
+- Menyediakan informasi terkini seputar kegiatan IDPMI, berita pasar modal, dan artikel akademis.  
+- Menjadi pusat data keanggotaan, dan publikasi anggota IDPMI.  
+- Mendukung tata kelola organisasi IDPMI yang lebih modern
 
 ---
 
@@ -21,45 +21,23 @@ Platform ini dirancang untuk:
 ### 👤 **Manajemen Pengguna**
 - **Multi-role system**:
   - **Admin**: mengelola seluruh data, pengguna, dan konten.
-  - **Anggota / Dosen**: mengelola profil, publikasi, penelitian, dan kegiatan akademik.
-  - **Publik**: dapat mengakses berita, artikel, dan direktori pakar.
+  - **Anggota / Dosen**: mengelola profil dan keanggotaan
+  - **Publik**: dapat mengakses berita, artikel, dan direktori.
 - Registrasi & autentikasi menggunakan sistem Django Authentication.
-- Profil pengguna lengkap: biodata, foto, akun akademik (Google Scholar, Sinta, Scopus, LinkedIn).
+- Profil pengguna lengkap: biodata, foto dll
 
-### 🎓 **Modul Kepakaran Dosen**
-- Data kepakaran disusun berdasarkan bidang ilmu dan program studi.  
-- Setiap dosen dapat memilih dan menampilkan **Bidang Kepakaran**, **Minat Penelitian**, dan **Program Studi**.  
-- Fitur **Tagging (Django Taggit)** untuk klasifikasi otomatis minat penelitian.
-
-### 📚 **Modul Pendidikan, Penelitian, dan Pengabdian**
-- Input dan manajemen data kegiatan tridarma dosen:
-  - **Pendidikan**: kegiatan pengajaran dan kurikulum.
-  - **Penelitian**: publikasi, proyek riset, dan kolaborasi.
-  - **Pengabdian**: kegiatan sosial dan pemberdayaan masyarakat.
-- Data bisa difilter per dosen, bidang, atau tahun kegiatan.
 
 ### 📰 **Portal Berita & Publikasi**
 - Modul **PostNews** untuk menampilkan berita terkini IDPMI.
 - Kategori artikel dan berita berdasarkan topik pasar modal, ekonomi, dan pendidikan.
 - Tampilan berita dengan thumbnail, slug URL otomatis, dan SEO friendly.
 
-### 🧠 **Direktori Pakar (Pakar IDPMI)**
-- Halaman khusus berisi daftar dosen beserta kepakaran dan afiliasinya.  
-- Pencarian dan filter berdasarkan:
-  - Nama
-  - Bidang Kepakaran
-  - Program Studi
-  - Minat Penelitian
 
 ### 🏛️ **Organisasi & Keanggotaan**
 - Struktur organisasi IDPMI ditampilkan secara dinamis.
 - Modul **Organisasi** untuk menampilkan dewan pengurus dan bidang kerja.
 - Data keanggotaan dikelola melalui modul **UserAnggota**.
 
-### 📦 **Modul Lainnya**
-- **Category & Theme**: pengelompokan tema digital (seperti template undangan digital IDPMI).
-- **Asset Management**: pengelolaan aset dengan QR Code.
-- **Export Data**: fitur ekspor CSV/Excel untuk admin.
 
 ---
 
@@ -69,9 +47,9 @@ Platform ini dirancang untuk:
 |-----------|------------|
 | Framework | Django 5.x |
 | Database | MySQL (via XAMPP atau server production) |
-| Frontend | HTML5, CSS3, JavaScript (dengan Tailwind & FontAwesome) |
+| Frontend | HTML5, CSS3, JavaScript |
 | Template Engine | Django Template |
-| Admin Panel | django-admin-interface / django-unfold |
+| Admin Panel | Custume theme HermantoXYZ |
 | Tagging System | django-taggit |
 | Import/Export Data | django-import-export |
 | Authentication | Django Auth System |
@@ -84,17 +62,14 @@ Platform ini dirancang untuk:
 ```
 
 idpmi/
-├── accounts/           # Modul akun dan manajemen pengguna
-├── kepakaran/          # Modul kepakaran dosen dan bidang penelitian
-├── pendidikan/         # Modul pendidikan
-├── penelitian/         # Modul penelitian
-├── pengabdian/         # Modul pengabdian masyarakat
-├── organisasi/         # Struktur organisasi dan pengurus
-├── services/           # Modul layanan tambahan (tema, aset, dll.)
+├── app/                # Aplikasi utama Django
+├── capture/            # Folder untuk menyimpan screenshot (opsional)
+├── requirements.txt    # Daftar dependencies Python
+├── README.md           # Dokumentasi proyek ini
 ├── static/             # File CSS, JS, dan gambar statis
 ├── templates/          # Template HTML
 ├── core/               # Pengaturan utama Django (urls, settings)
-└── manage.py
+└── manage.py           # Skrip manajemen Django
 
 ````
 
@@ -160,7 +135,7 @@ Akses di: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 | Role  | Username | Password |
 | ----- | -------- | -------- |
-| Admin | admin    | admin123 |
+| Admin | admin    | admin |
 
 ---
 
@@ -177,13 +152,6 @@ Akses di: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ---
 
-## 📄 Lisensi
-
-Proyek ini dilisensikan di bawah [MIT License](LICENSE).
-Dapat digunakan dan dimodifikasi untuk tujuan pendidikan dan pengembangan komunitas akademik.
-
----
-
 ## 🤝 Kontributor
 
 * **Andi Hermanto** – Developer utama
@@ -194,9 +162,9 @@ Dapat digunakan dan dimodifikasi untuk tujuan pendidikan dan pengembangan komuni
 
 ## 💬 Kontak
 
-📧 Email: [info@idpmi.or.id](mailto:info@idpmi.or.id)
+📧 Email: [idpmindonesia](mailto:info@idpmi.or.id)
 🌍 Website: [https://idpmi.or.id](https://idpmi.or.id)
-🏢 Sekretariat: Fakultas Ekonomi dan Bisnis, [Universitas / Lembaga terkait]
+
 
 ---
 
