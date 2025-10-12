@@ -141,7 +141,7 @@ Akses di: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ## 📊 Screenshot (opsional)
 
-> Tambahkan tangkapan layar halaman dashboard, direktori pakar, dan berita di sini jika sudah tersedia.
+> Tangkapan layar halaman dashboard, dan Home page.
 
 [![Dashboard](capture/127.0.0.1_8000_.png)](capture/127.0.0.1_8000_.png)  
 [![Direktori Pakar](capture/127.0.0.1_8000_article_.png)](capture/127.0.0.1_8000_article_.png)  
@@ -154,9 +154,8 @@ Akses di: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ## 🤝 Kontributor
 
-* **Andi Hermanto** – Developer utama
-* Tim IT & Riset IDPMI
-* Komunitas Dosen Pasar Modal Indonesia
+* **Andi Hermanto** bersama Tim – Developer utama
+* Tim IDPMI
 
 ---
 
