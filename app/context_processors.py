@@ -7,15 +7,15 @@ from django.utils import translation
 def web_name(request):
     return {
         'baseurl': 'http://127.0.0.1:8000/',
-        'web_name': 'IDPMI - From Ideas to Impact',
-        'webname': 'IDPMI',
-        'web_title': 'IDPMI - Ikatan Dosen dan Pasar Modal Indonesia',
+        'web_name': 'Praksis Digital Nusantara - From Ideas to Impact',
+        'webname': 'PADINUSANTARA.CO.ID',
+        'web_title': 'Praksis Digital Nusantara - Padinusantara.co.id',
         'address': 'Makassar',
-        'telp': '0877 7579 5886',
+        'telp': '0895 124 02404',
         'fax': '(0411) 889464',
-        'website': 'http://idpmi.id',
-        'email': 'idpmindonesia@gmail.com',
-        'instagram': '@idpmindonesia',
+        'website': 'http://padinusantara.co.id',
+        'email': 'praksisdn@gmail.com',
+        'instagram': '@padinusantara',
         'created_by': 'hermantoXYZ',
     }
 

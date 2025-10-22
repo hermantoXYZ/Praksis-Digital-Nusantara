@@ -1,0 +1,58 @@
+
+
+{% extends 'home/base.html' %}
+{% block title %}Kategori Product - {{ web_name }}{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="{{ category.description }}">
+    <meta name="keywords" content="{{ category.keywords }}">
+    <meta name="author" content="{{ category.author }}">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="google" content="notranslate">
+{% endblock %}
+{% block content %}
+<section class="articles-section" style="margin-top: 20px; margin-bottom: 50px;">
+    <div class="agenda-header" style="margin-left: 20px;">
+        <h2 class="agenda-title" style="text-align: center;">{{ category.name }}</h2>
+    </div>
+    <div class="article-grid">
+        {% if product_types %}
+        {% for type in product_types %}
+        <article class="article-card">
+            <div class="article-image">
+                {% if type.image %}
+                <img src="{{ type.image.url }}" alt="{{ type.name }}" class="article-image-img">
+            {% else %}
+            <div class="article-image-placeholder"></div>
+            {% endif %}
+
+            </div>
+            <div class="article-content">
+                <div class="article-meta">
+                    <span class="category">{{ type.name }}</span>
+                </div>
+
+                <p class="article-excerpt">
+                    {{ type.description }}
+                </p>
+                <div class="article-footer">
+                    <div class="author">
+                        <div class="author-avatar">AS</div>
+                        <span>{{ type.penanggung_jawab }}</span>
+                    </div>
+                    <a href="{% url 'products_by_type' type.slug %}">
+                        <button class="read-more">Chek Product</button>
+                    </a>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+        {% else %}
+        <p>Tidak ada artikel</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+

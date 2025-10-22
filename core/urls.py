@@ -40,6 +40,8 @@ urlpatterns += (
     path('article/', views.article_list, name='article_list'),
     path('category/<slug:slug>/', views.category_articles, name='category_articles'),
     path('page/<slug:slug>/', views.page_detail, name='page_detail'),
+    path('products/', views.product_type_list, name='product_type_list'),
+    path('product/<slug:slug>/', views.products_by_type, name='products_by_type'),
 
 )
 

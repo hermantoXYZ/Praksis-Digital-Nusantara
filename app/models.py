@@ -173,3 +173,61 @@ class Page(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Testimoni(models.Model):
+    images = models.ImageField(upload_to='testimoni/', null=True, blank=True)
+    judul = models.CharField(max_length=100)
+    jabatan = models.CharField(max_length=100)
+    link = models.URLField()
+    content = models.TextField()
+
+    def __str__(self):
+        return self.judul
+    
+# List Product and Service
+class ProductType(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=120, unique=True, blank=True)
+    description = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to='product_types/', blank=True, null=True)
+    penanggung_jawab = models.CharField(max_length=150, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+    
+
+PRODUCT_STATUS_CHOICES = [
+    ('AVAILABLE', 'Available'),
+    ('SOLD_OUT', 'Sold Out'),
+    ('COMING_SOON', 'Coming Soon'),
+]
+
+
+class Product(models.Model):
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=220, unique=True, blank=True)
+    product_type = models.ForeignKey(ProductType, on_delete=models.SET_NULL, null=True, blank=True)
+    status = models.CharField(max_length=20, choices=PRODUCT_STATUS_CHOICES, default='AVAILABLE')
+    description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    image = models.ImageField(upload_to='products/', blank=True, null=True)
+    link = models.URLField(max_length=300, blank=True, null=True)
+    link_payment = models.URLField(max_length=300, blank=True, null=True)
+    author = models.CharField(max_length=150, blank=True, null=True)
+    file_format = models.CharField(max_length=50, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name

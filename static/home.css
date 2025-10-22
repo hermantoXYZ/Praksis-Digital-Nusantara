@@ -142,7 +142,7 @@ body {
 
 /* Main Header Styles */
 .main-header {
-    background-color: #ffffff;
+    background-color: #011a4a;
     padding: 15px 0;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Stronger shadow */
     position: fixed; /* For z-index if needed */
@@ -192,12 +192,12 @@ body {
 
 /* Navigation Styles */
 .nav-menu {
-    background: linear-gradient(135deg, #ff9601 0%, #ff4534 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #727272 100%);
     border-radius: 40px; /* Adjust border-radius to match image more precisely */
     padding: 5px 5px; /* Adjusted padding */
     display: flex;
     align-items: center;
-    color: #ffffff;
+    color: #000000;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Stronger, softer shadow */
     /* flex-grow: 1; Removed, it can cause menu to expand too much */
     max-width: fit-content; /* Limit width to content */
@@ -240,8 +240,8 @@ body {
 
 /* Search Button */
 .search-button {
-    background-color: #000000;
-    color: var(--white);
+    background-color: #ffffff;
+    color: #000000;
     border: none;
     border-radius: 50%;
     width: 48px; /* Slightly larger button */
@@ -266,7 +266,7 @@ body {
     background: none;
     border: none;
     font-size: 1.8em;
-    color: #ef3f3f; /* White icon */
+    color: #eaeaea; /* White icon */
     cursor: pointer;
     padding: 10px;
     z-index: 101; /* Above other elements */
@@ -365,7 +365,7 @@ body {
     }
 
     .nav-menu ul li a {
-        color: var(--white); /* White text for dark background */
+        color: #494949; /* White text for dark background */
         padding: 12px 15px; /* More padding for clickable area */
         border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator */
     }
@@ -381,7 +381,6 @@ body {
 
     .search-button {
         margin-left: 0; /* Reset margin */
-        width: 100%; /* Take full width */
         border-radius: 5px; /* Less rounded for full width */
         height: 50px;
         font-size: 1.3em;
@@ -944,7 +943,7 @@ body {
 
 /* FOOTER */
 .footer {
-    background: #f8f8f8;
+    background: #0d2451;
     color: #fff;
     padding: 4rem 0 2rem;
 }
@@ -986,7 +985,7 @@ body {
     height: 40px;
     text-decoration: none;
     border-radius: 50%;
-    background: rgb(244 171 60);
+    background: #3167ce;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1001,7 +1000,7 @@ body {
 }
 
 .footer-col h4 {
-    color: #6c6c6c;
+    color: #ebebeb;
     font-size: 1.2rem;
     margin-bottom: 1.5rem;
     position: relative;
@@ -1026,7 +1025,7 @@ body {
 }
 
 .footer-col ul li a {
-    color: #999;
+    color: #fefefe;
     text-decoration: none;
     transition: all 0.3s ease;
 }
@@ -1040,12 +1039,12 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: #999;
+    color: #ffffff;
     margin-bottom: 1rem;
 }
 
 .contact-info i {
-    color: #000000;
+    color: #ffffff;
 }
 
 .footer-bottom {
@@ -3439,3 +3438,510 @@ body {
         justify-content: flex-start;
     }
 }
+
+
+/* responsive */
+
+        .praksis-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .praksis-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .praksis-header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #011a4a;
+        }
+
+        .praksis-header p {
+            font-size: 1.2rem;
+            color: #666;
+
+        }
+
+        .praksis-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .praksis-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .praksis-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .praksis-card-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .praksis-card-content {
+            padding: 30px;
+            background: #011a4a;
+            color: white;
+            position: relative;
+        }
+
+        .praksis-card-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ffd89b 0%, #19547b 100%);
+        }
+
+        .praksis-card-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .praksis-card-description {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        /* Warna gradient berbeda untuk setiap card */
+        .praksis-card:nth-child(1) .praksis-card-content {
+            background: #011a4a;
+        }
+
+        .praksis-card:nth-child(2) .praksis-card-content {
+            background: #011a4a;
+        }
+
+        .praksis-card:nth-child(3) .praksis-card-content {
+            background: #011a4a;
+        }
+
+        .praksis-card:nth-child(4) .praksis-card-content {
+            background: #011a4a;
+        }
+
+        @media (max-width: 1200px) {
+            .praksis-cards-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 25px;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .praksis-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .praksis-card {
+
+                margin: 10px;
+            }
+
+            .praksis-header p {
+                font-size: 1rem;
+            }
+
+            .praksis-cards-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .praksis-card-image {
+                height: 220px;
+            }
+
+            .praksis-card-content {
+                padding: 25px;
+            }
+
+            .praksis-card-title {
+                font-size: 1.7rem;
+            }
+
+            .praksis-card-description {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .praksis-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .praksis-card-title {
+                font-size: 1.5rem;
+            }
+
+            .praksis-card-description {
+                font-size: 0.95rem;
+            }
+
+            .praksis-card-content {
+                padding: 20px;
+            }
+        }
+
+
+        
+
+
+/* Css For Services */
+
+.card-container-services {
+    position: relative;
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.card-services-container
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.card-services {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 300px;
+    height: 150px;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #0d2451;
+    color: rgb(255, 255, 255);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+}
+
+.card-services-new-color {
+    background-color: #ffaa00;
+}
+
+.card-services-percetakan {
+    background-color: #ffaa00;
+}
+
+.card-content-services {
+    max-width: 70%;
+}
+
+.card-icon img {
+    width: 40px;
+    height: 40px;
+}
+
+.icon-img {
+    width: 40px; /* Adjust the size as needed */
+    height: 40px; /* Adjust the size as needed */
+}
+
+.card-services h3 {
+    margin: 0;
+    font-size: 1.2em;
+    margin-bottom: 12px;
+}
+
+.card-services p {
+    margin: 10px 0 0;
+    font-size: 11px;
+}
+
+/* Media queries untuk responsivitas */
+@media (max-width: 1200px) {
+    .card-container-services {
+        margin: 20px 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-container-services {
+        flex-direction: column;
+        align-items: center;
+        margin: 20px 5px;
+    }
+
+    .card-services {
+        width: 90%;
+        margin-bottom: 20px;
+    }
+}
+
+.text-before-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    background-color: #fff; /* Mungkin Anda ingin menambahkan latar belakang putih untuk kontras */
+    padding: 10px 0;
+}
+
+.card-text {
+    margin-top: 40px; /* Sesuaikan jarak teks dari atas kartu */
+}
+
+.text-center {
+    text-align: center;
+    color: #0d2451;
+}
+
+.title-services {
+    color: #b8b8b8;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+/* testimonial */
+
+
+
+.card-container-services-testimoni {
+    position: relative;
+    background-color: #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.testimonials-wrapper {
+    display: flex;
+    transition: transform 1s ease;
+}
+
+.quote-icon {
+    font-size: 24px;
+    color: #000000;
+    margin-right: 10px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+
+}
+
+
+.testimonials {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.quote-icon {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bi-quote {
+    color: #1a3b8b; /* Warna yang diinginkan */
+    font-size: 24px;
+}
+
+.testimonials h2 {
+    color: #333;
+}
+
+.testimonials p {
+    color: #666;
+    margin-bottom: 40px;
+}
+
+.testimonial {
+    display: flex;
+     min-width: 100%;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.testimonial-content {
+    max-width: 600px;
+    margin-bottom: 15px;
+}
+
+.client-img {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-top: 20px;
+}
+
+.testimonial-content p {
+    color: #555;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .testimonial-content {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .testimonials {
+        padding: 15px;
+    }
+
+    .bi-quote {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+.swiper-container {
+    width: 100%;
+    height: 300px;
+}
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/* GRID TEAM */
+
+
+.container-team {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.team-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.team-header .icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.team-header h2 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.team-card {
+    position: relative;
+    padding: 20px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.team-card h3 {
+    margin: 0;
+}
+
+.team-card p {
+    margin: 5px 0 0;
+}
+
+.team-card .plus, .team-card .arrow {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+}
+
+.team-card.purple {
+    background-color: #0d2451;
+}
+
+.team-card.black {
+    background-color: #000;
+}
+
+.team-card.yellow {
+    background-color: #0d2451;
+}
+
+.team-card .photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    border-radius: 100%;
+    transition: opacity 0.3s;
+}
+
+.team-card.flipped .photo {
+    opacity: 1;
+}
+
+.team-card.flipped h3,
+.team-card.flipped p,
+.team-card.flipped .plus,
+.team-card.flipped .arrow {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+@media (max-width: 600px) {
+    .team-header h2 {
+        font-size: 20px;
+    }
+
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .team-card {
+        padding: 15px;
+    }
+}
+

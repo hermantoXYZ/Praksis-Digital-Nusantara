@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-from app.models import Article, Category, Page, UserAnggota
+from app.models import Article, Category, Page, Testimoni, Product, ProductType
 from django.db.models import Count, Q
 from django.utils.text import slugify
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -15,30 +15,26 @@ def custom_404(request, exception):
     return render(request, "home/404.html", status=404)
 
 def index(request):
-    # Ambil semua artikel yang published
+
     all_articles = Article.objects.filter(status='published').order_by('-created_at')
-    # all_seminat_ujian = JadwalSeminarUjian.objects.filter(status='dijadwalkan').order_by('tanggal', 'waktu')
-    # all_events = Events.objects.all().order_by('tanggal_pelaksanaan', 'waktu_pelaksanaan')
-    # all_wisuda = Wisuda.objects.all().order_by('-tanggal_wisuda', '-ipk')[:10]
-    # Pagination - 6 artikel per halaman
     paginator = Paginator(all_articles, 6)
     page = request.GET.get('page')
     
     try:
         articles = paginator.page(page)
     except PageNotAnInteger:
-        # Jika page bukan integer, tampilkan halaman pertama
         articles = paginator.page(1)
     except EmptyPage:
-        # Jika page melebihi jumlah halaman yang ada, tampilkan halaman terakhir
         articles = paginator.page(paginator.num_pages)
     
     featured_article = Article.objects.filter(status='published').order_by('-created_at').first()
 
+    testimoni_list = Testimoni.objects.all()
     context = {
         'article_list': articles,
         'featured_article': featured_article,
         'paginator': paginator,
+        'testimoni_list' : testimoni_list,
     }
     return render(request,'home/index.html', context) 
 
@@ -158,6 +154,24 @@ def loginView(request):
         else:
             return render(request,'home/login.html', context) 
 
+def product_type_list(request):
+    product_types = ProductType.objects.all().order_by('name')
+    context = {
+        'product_types': product_types,
+    }
+    return render(request, 'home/product_type_list.html', context)
+
+def products_by_type(request, slug):
+    product_type = get_object_or_404(ProductType, slug=slug)
+    products = Product.objects.filter(product_type=product_type)
+
+    context = {
+        'product_type': product_type,
+        'products': products,
+    }
+
+    return render(request, 'home/products_by_type.html', context)
+
 @login_required
 def LogoutView(request):
     context = {
@@ -170,3 +184,4 @@ def LogoutView(request):
         return redirect('login')    
 
     return render(request,'logout.html', context)
+

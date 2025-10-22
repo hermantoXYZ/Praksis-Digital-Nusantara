@@ -1,0 +1,131 @@
+{% extends 'home/base.html' %}
+{% block title %}{{ product_type.name }} - Products{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="{{ product_type.description }}">
+    <meta name="keywords" content="{{ product_type.name }}, products">
+    <meta name="author" content="Your Site Name">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="google" content="notranslate">
+{% endblock %}
+
+{% block content %}
+<section class="articles-section" style="margin-top: 20px; margin-bottom: 50px;">
+    <div class="agenda-header" style="margin-left: 20px;">
+        <h2 class="agenda-title" style="text-align: center;">{{ product_type.name }}</h2>
+    </div>
+    <div class="article-grid">
+    {% if products %}
+        {% for product in products %}
+        <article class="article-card">
+            <div class="article-image">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="article-image-img">
+                {% else %}
+                <div class="article-image-placeholder"></div>
+                {% endif %}
+            </div>
+            <div class="article-content">
+                <div class="article-meta">
+                    <span class="category">{{ product.product_type.name }}</span>
+                    {% if product.status %}
+                    <span class="status status-{{ product.status|lower }}">{{ product.get_status_display }}</span>
+                    {% endif %}
+                </div>
+
+                <h3 class="article-title">{{ product.name }}</h3>
+
+                <p class="article-excerpt">
+                    {{ product.description|truncatewords:30 }}
+                </p>
+
+                {% if product.price %}
+                <div class="product-price">
+                    <strong>Rp {{ product.price }}</strong>
+                </div>
+                {% endif %}
+
+                {% if product.file_format %}
+                <div class="file-format">
+                    <small>Format: {{ product.file_format }}</small>
+                </div>
+                {% endif %}
+
+                <div class="article-footer">
+                    <div class="author">
+                        {% if product.author %}
+                        <div class="author-avatar">{{ product.author|slice:":2"|upper }}</div>
+                        <span>{{ product.author }}</span>
+                        {% else %}
+                        <div class="author-avatar">AS</div>
+                        <span>Admin</span>
+                        {% endif %}
+                    </div>
+                    {% if product.link %}
+                    <a href="{{ product.link }}" target="_blank">
+                        <button class="read-more"> <i class="ri-shopping-cart-2-line"></i> Order Now</button>
+                    </a>
+                    {% else %}
+                    <a href="/">
+                        <button class="read-more">Check Product</button>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    {% else %}
+        <p style="text-align: center; width: 100%;">Tidak ada produk tersedia</p>
+    {% endif %}
+    </div>
+</section>
+
+<style>
+.article-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.status {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+.status-available {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-out_of_stock {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.status-discontinued {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.article-title {
+    font-size: 1.2em;
+    margin: 10px 0;
+    font-weight: 600;
+}
+
+.product-price {
+    margin: 10px 0;
+    font-size: 1.1em;
+    color: #007bff;
+}
+
+.file-format {
+    margin: 5px 0;
+    color: #666;
+}
+</style>
+{% endblock %}
